@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
@@ -10,40 +10,40 @@ function Header() {
               ソフトウェア工房
             </h1>
           </Link>
-          
+
           <nav className="hidden md:flex space-x-8">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
               ホーム
             </Link>
-            <Link 
-              to="/members" 
+            <Link
+              to="/members"
               className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
               メンバー
             </Link>
-            <Link 
-              to="/portfolio" 
+            <Link
+              to="/portfolio"
               className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
               作品集
             </Link>
-            <Link 
-              to="/activity" 
+            <Link
+              to="/activity"
               className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
               活動履歴
             </Link>
-            <Link 
-              to="/blog" 
+            <Link
+              to="/blog"
               className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
               ブログ
             </Link>
-            <Link 
-              to="/notice" 
+            <Link
+              to="/notice"
               className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
               お知らせ
@@ -56,8 +56,18 @@ function Header() {
               className="text-gray-700 hover:text-primary-600 focus:outline-none focus:text-primary-600"
               aria-label="メニューを開く"
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             </button>
           </div>

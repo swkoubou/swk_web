@@ -1,15 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Members from './pages/Members';
-import Portfolio from './pages/Portfolio';
-import Activity from './pages/Activity';
-import Blog from './pages/Blog';
-import Notice from './pages/Notice';
-import Project from './pages/Project';
-import Achievement from './pages/Achievement';
-import Access from './pages/Access';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Members from "./pages/Members";
+import Portfolio from "./pages/Portfolio";
+import Activity from "./pages/Activity";
+import Blog from "./pages/Blog";
+import Notice from "./pages/Notice";
+import Project from "./pages/Project";
+import Achievement from "./pages/Achievement";
+import Access from "./pages/Access";
 
 function App() {
   return (
