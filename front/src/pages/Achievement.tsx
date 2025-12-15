@@ -1,0 +1,36 @@
+function Achievement() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">実績</h1>
+        <p className="text-xl text-gray-600">
+          ソフトウェア工房の成果と実績をご紹介します
+        </p>
+      </div>
+
+      <div className="space-y-6 mb-12">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <p className="text-sm text-gray-500 mb-2">2024.05.07</p>
+          <h3 className="text-xl font-bold text-gray-900 mb-3">やったことのタイトル</h3>
+          <p className="text-gray-600">〇〇に参加してきました！！</p>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <p className="text-sm text-gray-500 mb-2">2024.05.05</p>
+          <h3 className="text-xl font-bold text-gray-900 mb-3">やったことのタイトル</h3>
+          <p className="text-gray-600">〇〇に参加してきました！</p>
+        </div>
+      </div>
+
+      <div className="bg-primary-50 rounded-lg p-6 max-w-md mx-auto">
+        <h3 className="text-lg font-bold text-gray-900 mb-4">アーカイブ</h3>
+        <ul className="space-y-2">
+          <li><a href="/achievement" className="text-primary-600 hover:text-primary-500">2024年</a></li>
+          <li><a href="#" className="text-gray-600 hover:text-gray-500">2023年</a></li>
+          <li><a href="#" className="text-gray-600 hover:text-gray-500">2022年</a></li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default Achievement;
