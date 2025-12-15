@@ -19,80 +19,21 @@ const activities: ActivityItem[] = [
     description:
       "React + TypeScript + Tailwind CSSを使用した新しいサイトが完成しました。モダンなデザインと優れたユーザーエクスペリエンスを実現。",
     category: "project",
-    participants: ["こんどうそうた", "サンプル 太郎"],
+    participants: ["こんどうそうた"],
     relatedProject: "WEBサイト",
   },
-  {
-    id: 2,
-    date: "2024-12-10",
-    title: "第3回技術勉強会開催",
-    description:
-      "「TypeScriptで始める型安全なReact開発」をテーマに勉強会を実施。実践的なハンズオンセッションも含めて開催。",
-    category: "study",
-    participants: ["全メンバー"],
-    location: "研究室A",
-  },
-  {
-    id: 3,
-    date: "2024-12-05",
-    title: "アブラゼミプロジェクト発表",
-    description:
-      "音響解析を用いたセミの鳴き声分類システムの開発成果を学内発表会で披露。高い評価を獲得。",
-    category: "achievement",
-    participants: ["こんどうそうた", "サンプル 花子"],
-    location: "大学講堂",
-    relatedProject: "アブラゼミ",
-  },
-  {
-    id: 4,
-    date: "2024-11-28",
-    title: "月例ミーティング",
-    description:
-      "各プロジェクトの進捗報告と来月の計画について話し合いました。新メンバーの役割分担も決定。",
-    category: "meeting",
-    participants: ["全メンバー"],
-    location: "研究室B",
-  },
-  {
-    id: 5,
-    date: "2024-11-20",
-    title: "ハッカソンイベント参加",
-    description:
-      "地域のハッカソンイベント「Tech Challenge 2024」に参加。「じゃんけん」プロジェクトのプロトタイプを24時間で開発。",
-    category: "event",
-    participants: ["サンプル 次郎", "サンプル 太郎"],
-    location: "市民センター",
-  },
-  {
-    id: 6,
-    date: "2024-11-15",
-    title: "Git/GitHub勉強会",
-    description:
-      "チーム開発に必要なGitの基本的な使い方から、効果的なブランチ戦略まで学習しました。",
-    category: "study",
-    participants: ["全メンバー"],
-    location: "研究室A",
-  },
-  {
-    id: 7,
-    date: "2024-11-01",
-    title: "新メンバー歓迎会",
-    description:
-      "1年生の新メンバーを迎えて歓迎会を開催。自己紹介と今後の活動について説明しました。",
-    category: "event",
-    participants: ["全メンバー"],
-    location: "カフェテリア",
-  },
-  {
-    id: 8,
-    date: "2024-10-20",
-    title: "秘密道具プロジェクト完成",
-    description:
-      "日常生活を便利にするユーティリティツール集が完成。複数の便利機能を一つのアプリケーションに統合。",
-    category: "project",
-    participants: ["サンプル 花子", "こんどうそうた"],
-    relatedProject: "秘密道具",
-  },
+  // 新しい活動はここに追加してください
+  // 例:
+  // {
+  //   id: 2,
+  //   date: "2024-12-20",
+  //   title: "活動タイトル",
+  //   description: "活動の説明文をここに記載します。",
+  //   category: "event", // event, project, achievement, meeting, study から選択
+  //   participants: ["参加者1", "参加者2"],
+  //   location: "開催場所", // オプション
+  //   relatedProject: "関連プロジェクト名", // オプション
+  // },
 ];
 
 const categoryConfig = {
@@ -206,7 +147,7 @@ function Activity() {
         <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
 
         <div className="space-y-8">
-          {filteredActivities.map((activity, index) => {
+          {filteredActivities.map((activity) => {
             const config = categoryConfig[activity.category];
 
             return (

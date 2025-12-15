@@ -1,65 +1,40 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-interface BlogPost {
+export interface BlogPost {
   id: number;
   title: string;
   excerpt: string;
+  content: string;
   author: string;
   date: string;
   tags: string[];
   readTime: string;
 }
 
-const blogPosts: BlogPost[] = [
+export const blogPosts: BlogPost[] = [
   {
     id: 1,
-    title: "ReactとTypeScriptで始めるモダンフロントエンド開発",
+    title: "ソフトウェア工房公式サイトリニューアル完了のお知らせ",
     excerpt:
-      "TypeScriptを使ったReact開発の基本的な手法と、型安全性がもたらすメリットについて解説します。実際のプロジェクトでの経験を元に、ベストプラクティスを紹介。",
-    author: "こんどうそうた",
+      "ソフトウェア工房の公式Webサイトが全面リニューアルしました。React + TypeScript + Tailwind CSSを使用したモダンなデザインと、優れたユーザーエクスペリエンスを実現。開発の経緯や新機能についてご紹介します。",
+    content: `この度、ソフトウェア工房の公式Webサイトが全面リニューアルいたしました。
+
+今回のリニューアルでは、React 19、TypeScript、Tailwind CSS v4といった最新の技術スタックを採用し、モダンで保守性の高いWebサイトを実現しました。
+
+リニューアルの主なポイントは以下の通りです。
+
+まず、デザイン面では、シンプルで直感的なユーザーインターフェースを心がけました。白を基調としたクリーンなデザインに、アクセントカラーとして緑を採用し、適度な緩急をつけています。
+
+技術面では、TypeScriptによる型安全性の確保、Tailwind CSSによる効率的なスタイリング、React Router v7による高速なページ遷移を実現しています。
+
+また、レスポンシブデザインにも対応しており、スマートフォンからデスクトップまで、あらゆるデバイスで快適にご覧いただけます。
+
+今後も、ユーザーの皆様により良い情報をお届けできるよう、継続的な改善を行ってまいります。ご期待ください。`,
+    author: "匿名希望",
     date: "2024-12-15",
-    tags: ["React", "TypeScript", "Frontend"],
-    readTime: "5分",
-  },
-  {
-    id: 2,
-    title: "Tailwind CSSによるユーティリティファーストなデザイン",
-    excerpt:
-      "Tailwind CSSを使った効率的なスタイリング手法を実践的に学びます。カスタムコンポーネントの作成方法やレスポンシブデザインの実装まで。",
-    author: "サンプル 太郎",
-    date: "2024-12-10",
-    tags: ["CSS", "Tailwind", "Design"],
-    readTime: "7分",
-  },
-  {
-    id: 3,
-    title: "Pythonで機械学習入門：データ分析の第一歩",
-    excerpt:
-      "Pythonとライブラリを使った基本的なデータ分析手法を学習者向けに解説。実際のデータセットを使った実習も含まれています。",
-    author: "サンプル 花子",
-    date: "2024-12-05",
-    tags: ["Python", "Machine Learning", "Data Science"],
-    readTime: "10分",
-  },
-  {
-    id: 4,
-    title: "Gitを使ったチーム開発入門",
-    excerpt:
-      "バージョン管理システムGitの基本的な使い方から、チーム開発で重要なブランチ戦略まで、初心者にも分かりやすく説明します。",
-    author: "サンプル 次郎",
-    date: "2024-11-28",
-    tags: ["Git", "Team Development", "Version Control"],
-    readTime: "8分",
-  },
-  {
-    id: 5,
-    title: "Node.jsでRESTful API開発",
-    excerpt:
-      "Express.jsを使ったサーバーサイド開発の基礎から、認証やデータベース連携まで、実践的なAPI開発手法を紹介します。",
-    author: "こんどうそうた",
-    date: "2024-11-20",
-    tags: ["Node.js", "API", "Backend"],
-    readTime: "12分",
+    tags: ["お知らせ", "Webサイト", "リニューアル"],
+    readTime: "3分",
   },
 ];
 
@@ -114,7 +89,7 @@ function Blog() {
               placeholder="記事を検索..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500"
             />
           </div>
         </div>
@@ -125,7 +100,7 @@ function Blog() {
             onClick={() => setSelectedTag(null)}
             className={`px-3 py-1 text-sm rounded-full border transition-colors ${
               selectedTag === null
-                ? "bg-primary-600 text-white border-primary-600"
+                ? "bg-emerald-600 text-white border-emerald-600"
                 : "bg-white text-gray-700 border-gray-300 hover:border-gray-400"
             }`}
           >
@@ -137,7 +112,7 @@ function Blog() {
               onClick={() => setSelectedTag(tag)}
               className={`px-3 py-1 text-sm rounded-full border transition-colors ${
                 selectedTag === tag
-                  ? "bg-primary-600 text-white border-primary-600"
+                  ? "bg-emerald-600 text-white border-emerald-600"
                   : "bg-white text-gray-700 border-gray-300 hover:border-gray-400"
               }`}
             >
@@ -163,7 +138,7 @@ function Blog() {
                 <span>{post.readTime}</span>
               </div>
 
-              <h3 className="text-xl font-bold text-gray-900 mb-3 hover:text-primary-600 cursor-pointer transition-colors">
+              <h3 className="text-xl font-bold text-gray-900 mb-3 hover:text-emerald-600 cursor-pointer transition-colors">
                 {post.title}
               </h3>
 
@@ -173,16 +148,19 @@ function Blog() {
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-block px-2 py-1 text-xs bg-primary-100 text-primary-800 rounded"
+                    className="inline-block px-2 py-1 text-xs bg-emerald-100 text-emerald-800 rounded"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              <button className="text-primary-600 hover:text-primary-500 font-medium text-sm transition-colors">
+              <Link
+                to={`/blog/${post.id}`}
+                className="text-emerald-600 hover:text-emerald-500 font-medium text-sm transition-colors"
+              >
                 続きを読む →
-              </button>
+              </Link>
             </div>
           </article>
         ))}
