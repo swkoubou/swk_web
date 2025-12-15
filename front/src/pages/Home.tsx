@@ -13,7 +13,7 @@ function Home() {
           ソフトウェア工房
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          かっこいい構文を書く、創造的なソフトウェア開発集団
+          ～遊びも学びも全力で～
         </p>
       </div>
 
@@ -30,16 +30,8 @@ function Home() {
         </div>
         <div className="space-y-4">
           <div className="bg-white rounded-md p-4 border-l-4 border-emerald-500 hover:shadow-md transition-shadow">
-            <p className="text-gray-600 text-sm">2024.12.15</p>
-            <p className="font-medium text-gray-900">新しい順に3つ</p>
-          </div>
-          <div className="bg-white rounded-md p-4 border-l-4 border-emerald-500 hover:shadow-md transition-shadow">
-            <p className="text-gray-600 text-sm">2024.12.10</p>
-            <p className="font-medium text-gray-900">お知らせ項目 2</p>
-          </div>
-          <div className="bg-white rounded-md p-4 border-l-4 border-emerald-500 hover:shadow-md transition-shadow">
-            <p className="text-gray-600 text-sm">2024.12.05</p>
-            <p className="font-medium text-gray-900">お知らせ項目 3</p>
+            <p className="text-gray-600 text-sm">2025.12.15</p>
+            <p className="font-medium text-gray-900">ソフトウェア工房の公式サイトをリニューアルしました！</p>
           </div>
         </div>
       </div>
@@ -55,22 +47,23 @@ function Home() {
           </h3>
           <div className="text-gray-600 leading-relaxed space-y-4">
             <p>
-              ソフトウェア工房は、学生によるソフトウェア開発組織です。
-              最新の技術を学び、実践的なプロジェクトを通して成長することを目指しています。
+              ソフトウェア工房は、神奈川工科大学内にある学生によるソフトウェア開発組織です。
+              基本的には、定期的に発足されるプロジェクトでチームメンバーとともに課題解決に必要な技術を学び、
+              実際に自分たちで必要な環境の構築から実践までを通して行うことで、作る喜びや楽しさを見つけて成長していくことを目的とした組織です。
             </p>
             <div className="grid md:grid-cols-2 gap-6 mt-6">
               <div>
-                <h4 className="font-semibold text-gray-900 mb-2">活動内容</h4>
+                <h4 className="font-semibold text-gray-900 mb-2">主な活動内容</h4>
                 <ul className="list-disc list-inside space-y-1 text-sm">
                   <li>Webアプリケーション開発</li>
-                  <li>機械学習プロジェクト</li>
-                  <li>技術勉強会の開催</li>
+                  <li>学生向けハッカソン</li>
+                  <li>定期勉強会の開催</li>
                   <li>チーム・個人プロジェクト</li>
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2">
-                  使用技術
+                  使用技術<br></br>（今はこのＷｅｂサイトに使ったものを載せています）
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   <span className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm">

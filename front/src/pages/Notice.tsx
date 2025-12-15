@@ -10,7 +10,7 @@ function Notice() {
 
       <div className="space-y-6 mb-12">
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:border-emerald-200 transition-colors">
-          <p className="text-sm text-gray-500 mb-2">2024.05.07</p>
+          <p className="text-sm text-gray-500 mb-2">2025.05.07</p>
           <h3 className="text-xl font-bold mb-3">
             <a
               href="/naiyou"
@@ -22,7 +22,7 @@ function Notice() {
           <p className="text-gray-600">〇〇をやります</p>
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:border-emerald-200 transition-colors">
-          <p className="text-sm text-gray-500 mb-2">2024.05.05</p>
+          <p className="text-sm text-gray-500 mb-2">2025.05.05</p>
           <h3 className="text-xl font-bold mb-3">
             <a
               href="/naiyou"
