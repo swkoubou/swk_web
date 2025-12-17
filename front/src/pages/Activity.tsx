@@ -15,11 +15,11 @@ const activities: ActivityItem[] = [
   {
     id: 1,
     date: "2024-12-15",
-    title: "ソフトウェア工房公式サイトリニューアル完了",
+    title: "ソフトウェア工房公式サイトリニューアル",
     description:
       "React + TypeScript + Tailwind CSSを使用した新しいサイトが完成しました。モダンなデザインと優れたユーザーエクスペリエンスを実現。",
     category: "project",
-    participants: ["こんどうそうた"],
+    participants: ["ソフトウェア工房Web班"],
     relatedProject: "WEBサイト",
   },
   // 新しい活動はここに追加してください

@@ -28,13 +28,13 @@ function Header() {
               to="/activity"
               className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
-              活動履歴
+              活動記録
             </Link>
             <Link
               to="/blog"
               className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
-              ブログ
+              blog
             </Link>
             <Link
               to="/notice"
