@@ -24,7 +24,7 @@ function Home() {
           ソフトウェア工房
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          ～遊びも学びも全力で～
+          サブタイトル未定
         </p>
       </div>
 

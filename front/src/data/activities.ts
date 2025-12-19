@@ -17,7 +17,7 @@ export interface ActivityItem {
 export const activities: ActivityItem[] = [
   {
     id: 1,
-    date: "2024-12-15",
+    date: "2025-12-15",
     title: "ソフトウェア工房公式サイトリニューアル",
     description:
       "React + TypeScript + Tailwind CSSを使用した新しいサイトが完成しました。モダンなデザインと優れたユーザーエクスペリエンスを実現。",

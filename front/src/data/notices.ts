@@ -13,20 +13,20 @@ export const notices: Notice[] = [
     title: "ソフトウェア工房の公式サイトをリニューアルしました！",
     description: "ソフトウェア工房の公式サイトをリニューアルしました！",
   },
-  {
-    id: "2",
-    date: "2025.05.07",
-    title: "お知らせのタイトル",
-    description: "〇〇をやります",
-    link: "/naiyou",
-  },
-  {
-    id: "3",
-    date: "2025.05.05",
-    title: "お知らせのタイトル",
-    description: "くぁｗせｄｒｆｔｇｙふじこｌｐ",
-    link: "/naiyou",
-  },
+  //{
+  //  id: "2",
+  //  date: "2025.05.07",
+  //  title: "お知らせのタイトル",
+  //  description: "〇〇をやります",
+  //  link: "/naiyou",
+  //},
+  //{
+  // id: "3",
+  //date: "2025.05.05",
+  //  title: "お知らせのタイトル",
+  //  description: "くぁｗせｄｒｆｔｇｙふじこｌｐ",
+  //  link: "/naiyou",
+  //},
 ];
 
 // 最新のお知らせを取得する関数（最大3件）
