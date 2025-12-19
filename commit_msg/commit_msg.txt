@@ -1,0 +1,5 @@
+Add Docker configuration for frontend, backend, and database services
+
+- Added docker-compose.yml to define services for frontend (Vite app), backend (Go app), and PostgreSQL database
+- Added Dockerfile in front/ for Node.js 24 Alpine image
+- Added .dockerignore in front/ to exclude node_modules, logs, dist, and .git
