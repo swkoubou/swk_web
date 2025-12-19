@@ -46,7 +46,7 @@ function Header() {
               to="/blog"
               className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
-              blog
+              記事
             </Link>
             <Link
               to="/notice"
@@ -127,7 +127,7 @@ function Header() {
                 onClick={closeMenu}
                 className="text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 px-3 py-2 rounded-md text-base font-medium transition-colors"
               >
-                blog
+                記事
               </Link>
               <Link
                 to="/notice"
