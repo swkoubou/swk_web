@@ -1,11 +1,36 @@
+import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { blogPosts } from "./Blog";
+import { getBlogPostById, getBlogPosts } from "../services/blogService";
+import type { BlogPost } from "../data/blogs";
 
 function BlogDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const post = blogPosts.find((p) => p.id === Number(id));
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const blogPost = await getBlogPostById(Number(id));
+      const allPosts = await getBlogPosts();
+      setPost(blogPost);
+      setRelatedPosts(allPosts.filter((p) => p.id !== Number(id)).slice(0, 2));
+      setLoading(false);
+    };
+    fetchData();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <p className="text-gray-600">読み込み中...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!post) {
     return (
@@ -93,10 +118,7 @@ function BlogDetail() {
       <div className="mt-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">関連記事</h2>
         <div className="grid md:grid-cols-2 gap-6">
-          {blogPosts
-            .filter((p) => p.id !== post.id)
-            .slice(0, 2)
-            .map((relatedPost) => (
+          {relatedPosts.map((relatedPost) => (
               <Link
                 key={relatedPost.id}
                 to={`/blog/${relatedPost.id}`}
