@@ -141,11 +141,11 @@ function Activity() {
 
                     {/* サムネイル画像 */}
                     {activity.thumbnail && (
-                      <div className="md:w-32 md:h-32 w-full h-48 flex-shrink-0">
+                      <div className="md:w-32 w-full flex-shrink-0">
                         <img
                           src={activity.thumbnail}
                           alt={activity.title}
-                          className="w-full h-full object-cover rounded-lg"
+                          className="w-full h-auto rounded-lg"
                         />
                       </div>
                     )}

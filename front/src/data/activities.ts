@@ -37,11 +37,35 @@ export const activities: ActivityItem[] = [
 技術面では、TypeScriptによる型安全性の確保、Tailwind CSSによる効率的なスタイリング、React Router v7による高速なページ遷移を実現しています。
 
 また、レスポンシブデザインにも対応しており、スマートフォンからデスクトップまで、あらゆるデバイスで快適にご覧いただけます。`,
-    // images: [
+  
+
+  // images: [
     //   "/images/activities/renewal-1.jpg",
     //   "/images/activities/renewal-2.jpg",
     // ],
   },
+
+   {
+     id: 2,
+     date: "2025-07-01",
+     title: "Docker勉強会",
+     description: "Dockerについて",
+     category: "study", // event, project, achievement, meeting, study から選択
+     participants: ["工房メンバー"],
+     location: "工房室内", // オプション
+     thumbnail: "/images/activities/Docker勉強会の見出し画像.jpg", // オプション
+     content: `詳細な本文をここに記載します。`,
+  //
+  //   複数段落も対応しています。
+  //   改行も自由に入れられます。`, // オプション
+  //   images: [
+  //     "/images/activities/activity-2-img1.jpg",
+  //     "/images/activities/activity-2-img2.jpg",
+  //   ], // オプション
+   },
+
+
+
   // 新しい活動はここに追加してください
   // 例:
   // {

@@ -72,9 +72,13 @@ function Home() {
                 <h4 className="font-semibold text-gray-900 mb-2">主な活動内容</h4>
                 <ul className="list-disc list-inside space-y-1 text-sm">
                   <li>Webアプリケーション開発</li>
-                  <li>学生向けハッカソン</li>
                   <li>定期勉強会の開催</li>
+                  <li>学園祭での展示</li>
+                  <li>オープンキャンパスのお手伝い</li>
+                  <li>学生ハッカソンへの参加</li>
+                  <li>ワークショップの開催</li>
                   <li>チーム・個人プロジェクト</li>
+                    <p>　　　　　　　　　　　　　　　など</p>
                 </ul>
               </div>
               <div>
@@ -113,7 +117,7 @@ function Home() {
                   活動場所
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  神奈川工科大学 情報学部棟(K1号館)<br />
+                  神奈川工科大学 情報学部棟(K1号館)１階<br />
                   ソフトウェア工房室
                 </p>
               </div>
