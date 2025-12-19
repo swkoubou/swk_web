@@ -1,82 +1,37 @@
-import { useState } from "react";
-
-interface ActivityItem {
-  id: number;
-  date: string;
-  title: string;
-  description: string;
-  category: "event" | "project" | "achievement" | "meeting" | "study";
-  participants?: string[];
-  location?: string;
-  relatedProject?: string;
-}
-
-const activities: ActivityItem[] = [
-  {
-    id: 1,
-    date: "2024-12-15",
-    title: "ソフトウェア工房公式サイトリニューアル",
-    description:
-      "React + TypeScript + Tailwind CSSを使用した新しいサイトが完成しました。モダンなデザインと優れたユーザーエクスペリエンスを実現。",
-    category: "project",
-    participants: ["ソフトウェア工房Web班"],
-    relatedProject: "WEBサイト",
-  },
-  // 新しい活動はここに追加してください
-  // 例:
-  // {
-  //   id: 2,
-  //   date: "2024-12-20",
-  //   title: "活動タイトル",
-  //   description: "活動の説明文をここに記載します。",
-  //   category: "event", // event, project, achievement, meeting, study から選択
-  //   participants: ["参加者1", "参加者2"],
-  //   location: "開催場所", // オプション
-  //   relatedProject: "関連プロジェクト名", // オプション
-  // },
-];
-
-const categoryConfig = {
-  event: {
-    name: "イベント",
-    color: "bg-purple-100 text-purple-800",
-    icon: "🎉",
-  },
-  project: {
-    name: "プロジェクト",
-    color: "bg-blue-100 text-blue-800",
-    icon: "💻",
-  },
-  achievement: {
-    name: "成果",
-    color: "bg-green-100 text-green-800",
-    icon: "🏆",
-  },
-  meeting: {
-    name: "ミーティング",
-    color: "bg-yellow-100 text-yellow-800",
-    icon: "💬",
-  },
-  study: { name: "勉強会", color: "bg-pink-100 text-pink-800", icon: "📚" },
-};
+import { useState, useEffect } from "react";
+import { getActivities } from "../services/activityService";
+import { categoryConfig, type ActivityItem } from "../data/activities";
+import Modal from "../components/Modal";
 
 function Activity() {
+  const [activities, setActivities] = useState<ActivityItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
+  const [selectedActivity, setSelectedActivity] = useState<ActivityItem | null>(
+    null
+  );
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // データ取得
+  useEffect(() => {
+    const fetchActivities = async () => {
+      const data = await getActivities();
+      setActivities(data);
+    };
+    fetchActivities();
+  }, []);
 
   const years = [
     ...new Set(activities.map((a) => new Date(a.date).getFullYear())),
   ].sort((a, b) => b - a);
 
-  const filteredActivities = activities
-    .filter((activity) => {
-      const matchesCategory =
-        !selectedCategory || activity.category === selectedCategory;
-      const matchesYear =
-        !selectedYear || new Date(activity.date).getFullYear() === selectedYear;
-      return matchesCategory && matchesYear;
-    })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const filteredActivities = activities.filter((activity) => {
+    const matchesCategory =
+      !selectedCategory || activity.category === selectedCategory;
+    const matchesYear =
+      !selectedYear || new Date(activity.date).getFullYear() === selectedYear;
+    return matchesCategory && matchesYear;
+  });
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -85,6 +40,16 @@ function Activity() {
       month: "long",
       day: "numeric",
     });
+  };
+
+  const openModal = (activity: ActivityItem) => {
+    setSelectedActivity(activity);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedActivity(null);
   };
 
   return (
@@ -157,7 +122,7 @@ function Activity() {
 
                 {/* Content */}
                 <div className="ml-16 bg-white rounded-lg shadow-sm border border-gray-200 p-6 w-full hover:shadow-md transition-shadow">
-                  <div className="flex items-start justify-between mb-3">
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-3">
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 mb-2">
                         <span
@@ -173,11 +138,22 @@ function Activity() {
                         {activity.title}
                       </h3>
                     </div>
+
+                    {/* サムネイル画像 */}
+                    {activity.thumbnail && (
+                      <div className="md:w-32 md:h-32 w-full h-48 flex-shrink-0">
+                        <img
+                          src={activity.thumbnail}
+                          alt={activity.title}
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <p className="text-gray-600 mb-4">{activity.description}</p>
 
-                  <div className="grid md:grid-cols-2 gap-4 text-sm">
+                  <div className="grid md:grid-cols-2 gap-4 text-sm mb-4">
                     {activity.participants && (
                       <div>
                         <span className="font-medium text-gray-700">
@@ -211,6 +187,16 @@ function Activity() {
                       </div>
                     )}
                   </div>
+
+                  {/* 詳細を見るボタン */}
+                  {(activity.content || activity.images) && (
+                    <button
+                      onClick={() => openModal(activity)}
+                      className="text-primary-600 hover:text-primary-500 font-medium text-sm transition-colors"
+                    >
+                      詳細を見る →
+                    </button>
+                  )}
                 </div>
               </div>
             );
@@ -242,6 +228,91 @@ function Activity() {
           );
         })}
       </div>
+
+      {/* 詳細モーダル */}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        {selectedActivity && (
+          <div>
+            {/* ヘッダー */}
+            <div className="mb-6">
+              <div className="flex items-center space-x-2 mb-3">
+                <span
+                  className={`inline-block px-3 py-1 text-sm font-medium rounded-full ${
+                    categoryConfig[selectedActivity.category].color
+                  }`}
+                >
+                  {categoryConfig[selectedActivity.category].icon}{" "}
+                  {categoryConfig[selectedActivity.category].name}
+                </span>
+                <time className="text-sm text-gray-500">
+                  {formatDate(selectedActivity.date)}
+                </time>
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900">
+                {selectedActivity.title}
+              </h2>
+            </div>
+
+            {/* メタ情報 */}
+            <div className="bg-gray-50 rounded-lg p-4 mb-6 space-y-2 text-sm">
+              {selectedActivity.participants && (
+                <div>
+                  <span className="font-medium text-gray-700">参加者: </span>
+                  <span className="text-gray-600">
+                    {selectedActivity.participants.join(", ")}
+                  </span>
+                </div>
+              )}
+              {selectedActivity.location && (
+                <div>
+                  <span className="font-medium text-gray-700">場所: </span>
+                  <span className="text-gray-600">
+                    {selectedActivity.location}
+                  </span>
+                </div>
+              )}
+              {selectedActivity.relatedProject && (
+                <div>
+                  <span className="font-medium text-gray-700">
+                    関連プロジェクト:{" "}
+                  </span>
+                  <span className="text-primary-600 font-medium">
+                    {selectedActivity.relatedProject}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* 本文 */}
+            {selectedActivity.content && (
+              <div className="prose max-w-none mb-6">
+                {selectedActivity.content.split("\n").map((paragraph, index) => (
+                  <p key={index} className="text-gray-700 mb-4">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            )}
+
+            {/* 画像ギャラリー */}
+            {selectedActivity.images && selectedActivity.images.length > 0 && (
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-gray-900">画像</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {selectedActivity.images.map((image, index) => (
+                    <img
+                      key={index}
+                      src={image}
+                      alt={`${selectedActivity.title} - 画像 ${index + 1}`}
+                      className="w-full h-auto rounded-lg shadow-sm"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }

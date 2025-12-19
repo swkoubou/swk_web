@@ -1,4 +1,8 @@
+import { getAllNotices } from "../data/notices";
+
 function Notice() {
+  const allNotices = getAllNotices();
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
@@ -9,30 +13,27 @@ function Notice() {
       </div>
 
       <div className="space-y-6 mb-12">
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:border-emerald-200 transition-colors">
-          <p className="text-sm text-gray-500 mb-2">2025.05.07</p>
-          <h3 className="text-xl font-bold mb-3">
-            <a
-              href="/naiyou"
-              className="text-emerald-600 hover:text-emerald-500"
-            >
-              お知らせのタイトル
-            </a>
-          </h3>
-          <p className="text-gray-600">〇〇をやります</p>
-        </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:border-emerald-200 transition-colors">
-          <p className="text-sm text-gray-500 mb-2">2025.05.05</p>
-          <h3 className="text-xl font-bold mb-3">
-            <a
-              href="/naiyou"
-              className="text-emerald-600 hover:text-emerald-500"
-            >
-              お知らせのタイトル
-            </a>
-          </h3>
-          <p className="text-gray-600">くぁｗせｄｒｆｔｇｙふじこｌｐ</p>
-        </div>
+        {allNotices.map((notice) => (
+          <div
+            key={notice.id}
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:border-emerald-200 transition-colors"
+          >
+            <p className="text-sm text-gray-500 mb-2">{notice.date}</p>
+            <h3 className="text-xl font-bold mb-3">
+              {notice.link ? (
+                <a
+                  href={notice.link}
+                  className="text-emerald-600 hover:text-emerald-500"
+                >
+                  {notice.title}
+                </a>
+              ) : (
+                <span className="text-gray-900">{notice.title}</span>
+              )}
+            </h3>
+            <p className="text-gray-600">{notice.description}</p>
+          </div>
+        ))}
       </div>
 
       <div className="bg-emerald-50 rounded-lg p-6 max-w-md mx-auto">

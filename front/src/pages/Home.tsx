@@ -1,7 +1,9 @@
 import Logo from "../components/Logo";
 import { Link } from "react-router-dom";
+import { getLatestNotices } from "../data/notices";
 
 function Home() {
+  const latestNotices = getLatestNotices(3);
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section */}
@@ -29,10 +31,15 @@ function Home() {
           </Link>
         </div>
         <div className="space-y-4">
-          <div className="bg-white rounded-md p-4 border-l-4 border-emerald-500 hover:shadow-md transition-shadow">
-            <p className="text-gray-600 text-sm">2025.12.15</p>
-            <p className="font-medium text-gray-900">ソフトウェア工房の公式サイトをリニューアルしました！</p>
-          </div>
+          {latestNotices.map((notice) => (
+            <div
+              key={notice.id}
+              className="bg-white rounded-md p-4 border-l-4 border-emerald-500 hover:shadow-md transition-shadow"
+            >
+              <p className="text-gray-600 text-sm">{notice.date}</p>
+              <p className="font-medium text-gray-900">{notice.title}</p>
+            </div>
+          ))}
         </div>
       </div>
 
