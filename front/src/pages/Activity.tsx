@@ -145,7 +145,7 @@ function Activity() {
                         <img
                           src={activity.thumbnail}
                           alt={activity.title}
-                          className="w-full h-auto rounded-lg"
+                          className="w-full h-auto atarounded-lg"
                         />
                       </div>
                     )}
