@@ -1,48 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-export interface BlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  content: string;
-  author: string;
-  date: string;
-  tags: string[];
-  readTime: string;
-}
-
-export const blogPosts: BlogPost[] = [
-  {
-    id: 1,
-    title: "ソフトウェア工房公式サイトリニューアル完了のお知らせ",
-    excerpt:
-      "ソフトウェア工房の公式Webサイトが全面リニューアルしました。React + TypeScript + Tailwind CSSを使用したモダンなデザインと、優れたユーザーエクスペリエンスを実現。開発の経緯や新機能についてご紹介します。",
-    content: `この度、ソフトウェア工房の公式Webサイトが全面リニューアルいたしました。
-
-今回のリニューアルでは、React 19、TypeScript、Tailwind CSS v4といった最新の技術スタックを採用し、モダンで保守性の高いWebサイトを実現しました。
-
-リニューアルの主なポイントは以下の通りです。
-
-まず、デザイン面では、シンプルで直感的なユーザーインターフェースを心がけました。白を基調としたクリーンなデザインに、アクセントカラーとして緑を採用し、適度な緩急をつけています。
-
-技術面では、TypeScriptによる型安全性の確保、Tailwind CSSによる効率的なスタイリング、React Router v7による高速なページ遷移を実現しています。
-
-また、レスポンシブデザインにも対応しており、スマートフォンからデスクトップまで、あらゆるデバイスで快適にご覧いただけます。
-
-今後も、ユーザーの皆様により良い情報をお届けできるよう、継続的な改善を行ってまいります。ご期待ください。`,
-    author: "匿名希望",
-    date: "2024-12-15",
-    tags: ["お知らせ", "Webサイト", "リニューアル"],
-    readTime: "3分",
-  },
-];
-
-const allTags = [...new Set(blogPosts.flatMap((post) => post.tags))];
+import { getBlogPosts, getAllTags } from "../services/blogService";
+import type { BlogPost } from "../data/blogs";
 
 function Blog() {
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [allTags, setAllTags] = useState<string[]>([]);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+
+  // データ取得
+  useEffect(() => {
+    const fetchData = async () => {
+      const posts = await getBlogPosts();
+      const tags = await getAllTags();
+      setBlogPosts(posts);
+      setAllTags(tags);
+    };
+    fetchData();
+  }, []);
 
   const filteredPosts = blogPosts.filter((post) => {
     const matchesTag = !selectedTag || post.tags.includes(selectedTag);
