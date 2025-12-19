@@ -24,7 +24,7 @@ function Home() {
           ソフトウェア工房
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-          サブタイトル未定
+          ～遊びも学びも全力で～
         </p>
       </div>
 
@@ -102,77 +102,68 @@ function Home() {
       </div>
 
       {/* Organization Details Section */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-8 text-white">
-          <h2 className="text-3xl font-bold mb-2">参加してみませんか？</h2>
-          <p className="text-emerald-50">
-            プログラミングに興味がある方、一緒に開発を楽しみましょう
-          </p>
-        </div>
-
-        <div className="p-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* 活動場所 */}
-            <div>
-              <div className="flex items-start mb-4">
-                <div className="text-2xl mr-3">📍</div>
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">
-                    活動場所
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    神奈川工科大学 情報学部棟<br />
-                    ソフトウェア工房室
-                  </p>
-                </div>
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* 活動場所 */}
+          <div>
+            <div className="flex items-start mb-4">
+              <div className="text-2xl mr-3">📍</div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  活動場所
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  神奈川工科大学 情報学部棟(K1号館)<br />
+                  ソフトウェア工房室
+                </p>
               </div>
             </div>
+          </div>
 
-            {/* 活動時間 */}
-            <div>
-              <div className="flex items-start mb-4">
-                <div className="text-2xl mr-3">⏰</div>
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">
-                    活動時間
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    平日: 放課後〜<br />
-                    プロジェクトや勉強会は随時開催
-                  </p>
-                </div>
+          {/* 活動時間 */}
+          <div>
+            <div className="flex items-start mb-4">
+              <div className="text-2xl mr-3">⏰</div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  活動時間
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  チーム単位での活動は平日の放課後か空きコマ<br />
+                  プロジェクトや勉強会は随時開催
+                </p>
               </div>
             </div>
+          </div>
 
-            {/* 対象者 */}
-            <div>
-              <div className="flex items-start mb-4">
-                <div className="text-2xl mr-3">👥</div>
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">
-                    対象者
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    神奈川工科大学の学生<br />
-                    プログラミング経験は問いません
-                  </p>
-                </div>
+          {/* 対象者 */}
+          <div>
+            <div className="flex items-start mb-4">
+              <div className="text-2xl mr-3">👥</div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  対象者
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  神奈川工科大学の学生<br />
+                  プログラミング経験は問いません<br />
+                  新入生歓迎！！<br/>
+                </p>
               </div>
             </div>
+          </div>
 
-            {/* 参加方法 */}
-            <div>
-              <div className="flex items-start mb-4">
-                <div className="text-2xl mr-3">✉️</div>
-                <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">
-                    参加方法
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    工房室に直接お越しください<br />
-                    見学も歓迎しています
-                  </p>
-                </div>
+          {/* 参加方法 */}
+          <div>
+            <div className="flex items-start mb-4">
+              <div className="text-2xl mr-3">✉️</div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  参加方法とお問い合せについて
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  どちらもただいま見直し中です。<br />
+                </p>
               </div>
             </div>
           </div>
@@ -182,7 +173,7 @@ function Home() {
       {/* Navigation Cards */}
       <div className="mt-16">
         <h2 className="text-2xl font-bold text-gray-900 text-center mb-8">
-          サイト内ページ
+          サイト内のページ
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {navigationCards.map((card) => (
