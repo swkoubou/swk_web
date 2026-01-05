@@ -10,6 +10,8 @@ import Notice from "./pages/Notice";
 import Project from "./pages/Project";
 import Achievement from "./pages/Achievement";
 import Access from "./pages/Access";
+import Login from "./pages/Login";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -25,14 +27,17 @@ function App() {
             <Route path="/blog/:id" element={<BlogDetail />} />
             <Route path="/notice" element={<Notice />} />
             <Route path="/project" element={<Project />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/achievement" element={<Achievement />} />
             <Route path="/access" element={<Access />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>
         <Footer />
       </div>
     </Router>
   );
+  ß;
 }
 
 export default App;
