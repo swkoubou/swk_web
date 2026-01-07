@@ -1,3 +1,6 @@
+/// ! This component will delete.
+/// TODO: Delete this component.
+
 interface LogoProps {
   size?: number;
   className?: string;
