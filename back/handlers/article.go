@@ -1,17 +1,25 @@
-package controller
+package handlers
 
 import (
 	"net/http"
 	"strconv"
-	models "swk-web/internal/model"
 	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
+type Article struct {
+	ID       int    `json:"id"`
+	Title    string `json:"title"`
+	Content  string `json:"content"`
+	Author   string `json:"Author"`
+	CreateAt time.Time `json:"create_at"`
+	UpdateAt time.Time `json:"update_at"`
+}
+
 // 記事を一時的に保管する変数です。
-var articles = []models.Article{
-	{ID: 1, Title: "ソフトウェア工房", Content: "ここは神奈川工科大学の・・・です。", Author: "工房一同", CreatedAt: time.Now(), UpdatedAt: time.Now()},
+var articles = []Article {
+	{ID: 1, Title: "ソフトウェア工房", Content: "ここは神奈川工科大学の・・・です。", Author: "工房一同", CreateAt: time.Now(), UpdateAt: time.Now()},
 }
 
 // GET `/articles`
@@ -43,15 +51,15 @@ func GetArticle(c *gin.Context) {
 // POST `/articles`
 // 新しい記事を作成します。
 func CreateArticle(c *gin.Context) {
-	var newArticle models.Article
+	var newArticle Article
 	if err := c.ShouldBindJSON(&newArticle); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	newArticle.ID = len(articles) + 1
-	newArticle.CreatedAt = time.Now()
-	newArticle.UpdatedAt = time.Now()
+	newArticle.ID = len(articles)
+	newArticle.CreateAt = time.Now()
+	newArticle.UpdateAt = time.Now()
 
 	articles = append(articles, newArticle)
 	c.JSON(http.StatusCreated, newArticle)
@@ -67,26 +75,27 @@ func UpdateArticle(c *gin.Context) {
 		return
 	}
 
-	var input models.Article
+	var input Article
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
+	
 	for i, art := range articles {
 		if art.ID == id {
 			articles[i].Title = input.Title
 			articles[i].Content = input.Content
 			articles[i].Author = input.Author
-			articles[i].UpdatedAt = time.Now()
-
+			articles[i].UpdateAt = time.Now()
+			
 			c.JSON(http.StatusOK, articles[i])
 			return
 		}
 	}
-
+	
 	c.JSON(http.StatusNotFound, gin.H{"message": "Article not found."})
 }
+
 
 // DELETE `/articles/id:`
 // IDに該当する記事を削除します。
@@ -98,7 +107,7 @@ func DeleteArticle(c *gin.Context) {
 		return
 	}
 
-	for i, art := range articles {
+	for i, art:= range articles {
 		if art.ID == id {
 			articles = append(articles[:i], articles[i+1:]...)
 
