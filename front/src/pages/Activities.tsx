@@ -1,40 +1,74 @@
-import { useState, useEffect } from "react";
-import { getActivities } from "../services/activityService";
-import { categoryConfig, type ActivityItem } from "../data/activities";
-import Modal from "../components/Modal";
+import { useState, useEffect, useRef } from "react";
 
-function Activity() {
-  const [activities, setActivities] = useState<ActivityItem[]>([]);
+import type { Activities, Activity } from "@appTypes/activities.d.ts";
+import Modal from "../components/Modal";
+import { getActivities, getActivity } from "@/api/activities";
+import * as activitiesService from "@/services/activities";
+import { categories } from "@/data/activities";
+
+/**
+ * * 活動履歴を表示するコンポーネント
+ * @returns {React.ReactElement}
+ */
+function Activities(): React.ReactElement {
+  const [activities, setActivities] = useState<Activities[]>([]);
+  // Metadata
+  const [selectedOrder, setSelectedOrder] = useState<"asc" | "desc">("asc");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
-  const [selectedActivity, setSelectedActivity] = useState<ActivityItem | null>(
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[] | null>([]);
+  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
     null
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const activitiesYearRef = useRef<number[]>([]);
 
-  // データ取得
-  useEffect(() => {
-    const fetchActivities = async () => {
-      const data = await getActivities();
-      setActivities(data);
-    };
-    fetchActivities();
-  }, []);
+  /**
+   * * フィルタリング条件に基づいて活動履歴をフィルタリングします。
+   * * 選順は、順序 -> カテゴリ -> 月 -> 年 -> タグです。
+   * @param {Activities[]} activities - フィルタリングする活動履歴
+   * @returns {Activities[]} フィルタリングされた活動履歴
+   */
+  const filterActivities = (activities: Activities[] = []): Activities[] => {
+    return activitiesService.filterActivitiesByTags(
+      activitiesService.filterActivitiesByYear(
+        activitiesService.filterActivitiesByMonth(
+          activitiesService.filterActivitiesByCategory(
+            activitiesService.sortActivitiesByOrder(activities, selectedOrder),
+            selectedCategory
+          ),
+          selectedMonth
+        ),
+        selectedYear
+      ),
+      selectedTags!
+    );
+  };
 
-  const years = [
-    ...new Set(activities.map((a) => new Date(a.date).getFullYear())),
-  ].sort((a, b) => b - a);
+  const activitiesYear = () => {
+    activitiesYearRef.current = [];
+    activities.map((activity) => {
+      return activitiesYearRef.current.push(
+        new Date(activity.date).getFullYear()
+      );
+    });
+  };
 
-  const filteredActivities = activities.filter((activity) => {
-    const matchesCategory =
-      !selectedCategory || activity.category === selectedCategory;
-    const matchesYear =
-      !selectedYear || new Date(activity.date).getFullYear() === selectedYear;
-    return matchesCategory && matchesYear;
-  });
+  /**
+   * * 選順を変更したときのハンドラ
+   * @param {React.ChangeEvent<HTMLSelectElement>} e - 変換イベント
+   */
+  const handleOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOrder(e.target.value as "asc" | "desc");
+  };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+  /**
+   * * Date型を日本語の文字列に変換えます。
+   * @param {Date} date - 変換する日付
+   * @returns {string} 変換後の日本語の文字列
+   */
+  const toJapaneseDate = (date: Date) => {
     return date.toLocaleDateString("ja-JP", {
       year: "numeric",
       month: "long",
@@ -42,7 +76,8 @@ function Activity() {
     });
   };
 
-  const openModal = (activity: ActivityItem) => {
+  const openModal = async (id: number) => {
+    const activity: Activity = await getActivity(id);
     setSelectedActivity(activity);
     setIsModalOpen(true);
   };
@@ -51,6 +86,22 @@ function Activity() {
     setIsModalOpen(false);
     setSelectedActivity(null);
   };
+
+  /// * 活動履歴の概要を取得
+  useEffect(() => {
+    const fetchGetActivities = async () => {
+      const data = await getActivities();
+      setActivities(data);
+    };
+
+    fetchGetActivities();
+    activitiesYear();
+  }, []);
+
+  /// * フィルタリング条件が指定されたら活動履歴をフィルタリング
+  useEffect(() => {
+    setActivities((activitiesPrev) => filterActivities(activitiesPrev));
+  }, [selectedYear, selectedCategory, selectedMonth, selectedTags]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -61,9 +112,9 @@ function Activity() {
         </p>
       </div>
 
-      {/* Filters */}
+      {/* フィルタリング */}
       <div className="mb-8 flex flex-wrap justify-center gap-4">
-        {/* Category Filter */}
+        {/* カテゴリフィルター */}
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setSelectedCategory(null)}
@@ -75,7 +126,7 @@ function Activity() {
           >
             すべて
           </button>
-          {Object.entries(categoryConfig).map(([key, config]) => (
+          {Object.entries(categories).map(([key, config]) => (
             <button
               key={key}
               onClick={() => setSelectedCategory(key)}
@@ -99,7 +150,7 @@ function Activity() {
           className="px-3 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-500"
         >
           <option value="">年で絞り込み</option>
-          {years.map((year) => (
+          {activitiesYearRef.current.map((year) => (
             <option key={year} value={year}>
               {year}年
             </option>
@@ -107,31 +158,31 @@ function Activity() {
         </select>
       </div>
 
-      {/* Timeline */}
+      {/* 概要一覧 */}
       <div className="relative">
         <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
 
         <div className="space-y-8">
-          {filteredActivities.map((activity) => {
-            const config = categoryConfig[activity.category];
+          {filterActivities(activities).map((activity) => {
+            const category = categories[activity.category];
 
             return (
               <div key={activity.id} className="relative flex items-start">
-                {/* Timeline dot */}
+                {/* 線 */}
                 <div className="absolute left-6 w-4 h-4 bg-primary-600 border-4 border-white rounded-full shadow"></div>
 
-                {/* Content */}
+                {/* 内容 */}
                 <div className="ml-16 bg-white rounded-lg shadow-sm border border-gray-200 p-6 w-full hover:shadow-md transition-shadow">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-3">
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 mb-2">
                         <span
-                          className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${config.color}`}
+                          className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${category.color}`}
                         >
-                          {config.icon} {config.name}
+                          {category.icon} {category.name}
                         </span>
                         <time className="text-sm text-gray-500">
-                          {formatDate(activity.date)}
+                          {toJapaneseDate(activity.date)}
                         </time>
                       </div>
                       <h3 className="text-lg font-bold text-gray-900">
@@ -139,11 +190,11 @@ function Activity() {
                       </h3>
                     </div>
 
-                    {/* サムネイル画像 */}
-                    {activity.thumbnail && (
-                      <div className="md:w-32 md:h-32 w-full h-48 flex-shrink-0">
+                    {/* 概要イメージ画像 */}
+                    {activity.summaryImagePath && (
+                      <div className="md:w-32 md:h-32 w-full h-48 shrink-0">
                         <img
-                          src={activity.thumbnail}
+                          src={activity.summaryImagePath}
                           alt={activity.title}
                           className="w-full h-full object-cover rounded-lg"
                         />
@@ -165,6 +216,7 @@ function Activity() {
                       </div>
                     )}
 
+                    {/* 場所 */}
                     {activity.location && (
                       <div>
                         <span className="font-medium text-gray-700">
@@ -176,22 +228,37 @@ function Activity() {
                       </div>
                     )}
 
-                    {activity.relatedProject && (
+                    {/* 関連活動 */}
+                    {activity.relatedActivities && (
                       <div className="md:col-span-2">
                         <span className="font-medium text-gray-700">
-                          関連プロジェクト:{" "}
+                          関連活動:{" "}
                         </span>
                         <span className="text-primary-600 font-medium">
-                          {activity.relatedProject}
+                          {activity.relatedActivities.join(", ")}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* タグ */}
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    {activity.tags && (
+                      <div>
+                        <span className="font-medium text-gray-700">
+                          タグ:{" "}
+                        </span>
+                        <span className="text-gray-600">
+                          {activity.tags.join(", ")}
                         </span>
                       </div>
                     )}
                   </div>
 
                   {/* 詳細を見るボタン */}
-                  {(activity.content || activity.images) && (
+                  {activity.isContented && (
                     <button
-                      onClick={() => openModal(activity)}
+                      onClick={() => openModal(activity.id)}
                       className="text-primary-600 hover:text-primary-500 font-medium text-sm transition-colors"
                     >
                       詳細を見る →
@@ -204,7 +271,7 @@ function Activity() {
         </div>
       </div>
 
-      {filteredActivities.length === 0 && (
+      {filterActivities(activities).length === 0 && (
         <div className="text-center py-12">
           <p className="text-gray-500">
             条件に一致する活動が見つかりませんでした。
@@ -214,7 +281,7 @@ function Activity() {
 
       {/* Statistics */}
       <div className="mt-12 grid grid-cols-2 md:grid-cols-5 gap-4">
-        {Object.entries(categoryConfig).map(([key, config]) => {
+        {Object.entries(categories).map(([key, config]) => {
           const count = activities.filter((a) => a.category === key).length;
           return (
             <div
@@ -238,14 +305,14 @@ function Activity() {
               <div className="flex items-center space-x-2 mb-3">
                 <span
                   className={`inline-block px-3 py-1 text-sm font-medium rounded-full ${
-                    categoryConfig[selectedActivity.category].color
+                    categories[selectedActivity.category].color
                   }`}
                 >
-                  {categoryConfig[selectedActivity.category].icon}{" "}
-                  {categoryConfig[selectedActivity.category].name}
+                  {categories[selectedActivity.category].icon}{" "}
+                  {categories[selectedActivity.category].name}
                 </span>
                 <time className="text-sm text-gray-500">
-                  {formatDate(selectedActivity.date)}
+                  {toJapaneseDate(selectedActivity.date)}
                 </time>
               </div>
               <h2 className="text-3xl font-bold text-gray-900">
@@ -271,13 +338,13 @@ function Activity() {
                   </span>
                 </div>
               )}
-              {selectedActivity.relatedProject && (
+              {selectedActivity.relatedActivities && (
                 <div>
                   <span className="font-medium text-gray-700">
                     関連プロジェクト:{" "}
                   </span>
                   <span className="text-primary-600 font-medium">
-                    {selectedActivity.relatedProject}
+                    {selectedActivity.relatedActivities}
                   </span>
                 </div>
               )}
@@ -286,30 +353,33 @@ function Activity() {
             {/* 本文 */}
             {selectedActivity.content && (
               <div className="prose max-w-none mb-6">
-                {selectedActivity.content.split("\n").map((paragraph, index) => (
-                  <p key={index} className="text-gray-700 mb-4">
-                    {paragraph}
-                  </p>
-                ))}
+                {selectedActivity.content
+                  .split("\n")
+                  .map((paragraph, index) => (
+                    <p key={index} className="text-gray-700 mb-4">
+                      {paragraph}
+                    </p>
+                  ))}
               </div>
             )}
 
             {/* 画像ギャラリー */}
-            {selectedActivity.images && selectedActivity.images.length > 0 && (
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold text-gray-900">画像</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {selectedActivity.images.map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`${selectedActivity.title} - 画像 ${index + 1}`}
-                      className="w-full h-auto rounded-lg shadow-sm"
-                    />
-                  ))}
+            {selectedActivity.imagesPath &&
+              selectedActivity.imagesPath.length > 0 && (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-bold text-gray-900">画像</h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {selectedActivity.imagesPath.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`${selectedActivity.title} - 画像 ${index + 1}`}
+                        className="w-full h-auto rounded-lg shadow-sm"
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         )}
       </Modal>
@@ -317,4 +387,4 @@ function Activity() {
   );
 }
 
-export default Activity;
+export default Activities;

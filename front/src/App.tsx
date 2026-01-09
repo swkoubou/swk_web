@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Portfolio from "./pages/Portfolio";
-import Activity from "./pages/Activity";
+import Activities from "./pages/Activities";
 import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
 import Notice from "./pages/Notice";
@@ -20,7 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/activity" element={<Activity />} />
+            <Route path="/activity" element={<Activities />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetail />} />
             <Route path="/notice" element={<Notice />} />
