@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 import type { Activities, Activity } from "@appTypes/activities.d.ts";
 import Modal from "../components/Modal";
@@ -99,9 +99,9 @@ function Activities(): React.ReactElement {
   }, []);
 
   /// * フィルタリング条件が指定されたら活動履歴をフィルタリング
-  useEffect(() => {
-    setActivities((activitiesPrev) => filterActivities(activitiesPrev));
-  }, [selectedYear, selectedCategory, selectedMonth, selectedTags]);
+  const filteredActivities = useMemo(() => {
+    return filterActivities(activities);
+  }, [activities, selectedYear, selectedCategory, selectedMonth, selectedTags]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -163,7 +163,7 @@ function Activities(): React.ReactElement {
         <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
 
         <div className="space-y-8">
-          {filterActivities(activities).map((activity) => {
+          {filteredActivities.map((activity) => {
             const category = categories[activity.category];
 
             return (
