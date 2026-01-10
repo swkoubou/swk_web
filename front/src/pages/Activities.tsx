@@ -1,107 +1,23 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import React from "react";
+import { categories } from "@data/activities";
+import Modal from "@components/Modal";
+import { useActivities } from "@hooks/useActivities";
 
-import type { Activities, Activity } from "@appTypes/activities.d.ts";
-import Modal from "../components/Modal";
-import { getActivities, getActivity } from "@/api/activities";
-import * as activitiesService from "@/services/activities";
-import { categories } from "@/data/activities";
-
-/**
- * * 活動履歴を表示するコンポーネント
- * @returns {React.ReactElement}
- */
 function Activities(): React.ReactElement {
-  const [activities, setActivities] = useState<Activities[]>([]);
-  // Metadata
-  const [selectedOrder, setSelectedOrder] = useState<"asc" | "desc">("asc");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number | null>(null);
-  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
-  const [selectedTags, setSelectedTags] = useState<string[] | null>([]);
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
-    null
-  );
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const activitiesYearRef = useRef<number[]>([]);
-
-  /**
-   * * フィルタリング条件に基づいて活動履歴をフィルタリングします。
-   * * 選順は、順序 -> カテゴリ -> 月 -> 年 -> タグです。
-   * @param {Activities[]} activities - フィルタリングする活動履歴
-   * @returns {Activities[]} フィルタリングされた活動履歴
-   */
-  const filterActivities = (activities: Activities[] = []): Activities[] => {
-    return activitiesService.filterActivitiesByTags(
-      activitiesService.filterActivitiesByYear(
-        activitiesService.filterActivitiesByMonth(
-          activitiesService.filterActivitiesByCategory(
-            activitiesService.sortActivitiesByOrder(activities, selectedOrder),
-            selectedCategory
-          ),
-          selectedMonth
-        ),
-        selectedYear
-      ),
-      selectedTags!
-    );
-  };
-
-  const activitiesYear = () => {
-    activitiesYearRef.current = [];
-    activities.map((activity) => {
-      return activitiesYearRef.current.push(
-        new Date(activity.date).getFullYear()
-      );
-    });
-  };
-
-  /**
-   * * 選順を変更したときのハンドラ
-   * @param {React.ChangeEvent<HTMLSelectElement>} e - 変換イベント
-   */
-  const handleOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOrder(e.target.value as "asc" | "desc");
-  };
-
-  /**
-   * * Date型を日本語の文字列に変換えます。
-   * @param {Date} date - 変換する日付
-   * @returns {string} 変換後の日本語の文字列
-   */
-  const toJapaneseDate = (date: Date) => {
-    return date.toLocaleDateString("ja-JP", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
-  const openModal = async (id: number) => {
-    const activity: Activity = await getActivity(id);
-    setSelectedActivity(activity);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedActivity(null);
-  };
-
-  /// * 活動履歴の概要を取得
-  useEffect(() => {
-    const fetchGetActivities = async () => {
-      const data = await getActivities();
-      setActivities(data);
-    };
-
-    fetchGetActivities();
-    activitiesYear();
-  }, []);
-
-  /// * フィルタリング条件が指定されたら活動履歴をフィルタリング
-  const filteredActivities = useMemo(() => {
-    return filterActivities(activities);
-  }, [activities, selectedYear, selectedCategory, selectedMonth, selectedTags]);
+  const {
+    activities,
+    filteredActivities,
+    availableYears,
+    selectedCategory,
+    selectedYear,
+    selectedActivity,
+    isModalOpen,
+    setSelectedCategory,
+    setSelectedYear,
+    openModal,
+    closeModal,
+    toJapaneseDate,
+  } = useActivities();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -150,7 +66,7 @@ function Activities(): React.ReactElement {
           className="px-3 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-500"
         >
           <option value="">年で絞り込み</option>
-          {activitiesYearRef.current.map((year) => (
+          {availableYears.map((year) => (
             <option key={year} value={year}>
               {year}年
             </option>
@@ -271,7 +187,7 @@ function Activities(): React.ReactElement {
         </div>
       </div>
 
-      {filterActivities(activities).length === 0 && (
+      {Object.keys(activities).length === 0 && (
         <div className="text-center py-12">
           <p className="text-gray-500">
             条件に一致する活動が見つかりませんでした。
