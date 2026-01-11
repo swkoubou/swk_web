@@ -33,6 +33,7 @@
       "@appTypes/*": ["src/types/*"],
       "@services/*": ["src/services/*"],
       "@config/*": ["src/config/*"],
+      "@features/*": ["src/features/*"],
       "@styles/*": ["src/styles/*"]
     }
   },
