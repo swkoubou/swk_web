@@ -1,4 +1,4 @@
-// types/acitivities.ts
+// types/activities.ts
 /// * 活動履歴の型の設定（必要であれば随時追加してください。）
 
 /// * 活動履歴の概要の型
@@ -14,13 +14,7 @@ export type Activities = {
 
   // Metadata
   /// TODO: 静的定義からデータベース参照によるカスタムカテゴリ形式を検討
-  category:
-    | "event"
-    | "project"
-    | "achievement"
-    | "meeting"
-    | "other"
-    | (string & {});
+  category: "event" | "project" | "achievement" | "meeting" | "other" | (string & {});
   tags: string[]; // React, Vueなどのタグ
 
   // UI Control
@@ -48,13 +42,7 @@ export type Activity = {
 
   // Metadata
   /// TODO: 静的定義からデータベース参照によるカスタムカテゴリ形式を検討
-  category:
-    | "event"
-    | "project"
-    | "achievement"
-    | "meeting"
-    | "other"
-    | (string & {});
+  category: "event" | "project" | "achievement" | "meeting" | "other" | (string & {});
   tags: string[]; // React, Vueなどのタグ
 
   // Details / Optional
@@ -74,3 +62,11 @@ export type Categories = {
 
 export type Tags = string[];
 export type Status = "draft" | "published" | "archived";
+
+interface selectedStatusInterface {
+  order: "asc" | "desc";
+  category: Activities["category"] | null;
+  year: number | null;
+  month: number | null;
+  tags: string[];
+}

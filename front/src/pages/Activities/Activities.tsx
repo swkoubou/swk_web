@@ -1,197 +1,21 @@
 import React from "react";
 import { categories } from "@data/activities";
 import Modal from "@components/Modal";
-import { useActivities } from "@hooks/useActivities";
+import { useActivities } from "@/hooks/Activities/useActivities";
 
 export default function Activities(): React.ReactElement {
-  const {
-    activities,
-    filteredActivities,
-    availableYears,
-    selectedCategory,
-    selectedYear,
-    selectedActivity,
-    isModalOpen,
-    setSelectedCategory,
-    setSelectedYear,
-    openModal,
-    closeModal,
-    toJapaneseDate,
-  } = useActivities();
+  const { activities, selectedActivity, isModalOpen, closeModal, toJapaneseDate } = useActivities();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">活動履歴</h1>
-        <p className="text-xl text-gray-600">
-          ソフトウェア工房の活動記録とマイルストーン
-        </p>
-      </div>
-
-      {/* フィルタリング */}
-      <div className="mb-8 flex flex-wrap justify-center gap-4">
-        {/* カテゴリフィルター */}
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setSelectedCategory(null)}
-            className={`px-3 py-1 text-sm rounded-md transition-colors ${
-              selectedCategory === null
-                ? "bg-primary-600 text-white"
-                : "bg-white text-gray-700 border border-gray-300 hover:border-gray-400"
-            }`}
-          >
-            すべて
-          </button>
-          {Object.entries(categories).map(([key, config]) => (
-            <button
-              key={key}
-              onClick={() => setSelectedCategory(key)}
-              className={`px-3 py-1 text-sm rounded-md transition-colors ${
-                selectedCategory === key
-                  ? "bg-primary-600 text-white"
-                  : "bg-white text-gray-700 border border-gray-300 hover:border-gray-400"
-              }`}
-            >
-              {config.icon} {config.name}
-            </button>
-          ))}
-        </div>
-
-        {/* Year Filter */}
-        <select
-          value={selectedYear || ""}
-          onChange={(e) =>
-            setSelectedYear(e.target.value ? parseInt(e.target.value) : null)
-          }
-          className="px-3 py-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-500"
-        >
-          <option value="">年で絞り込み</option>
-          {availableYears.map((year) => (
-            <option key={year} value={year}>
-              {year}年
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* 概要一覧 */}
-      <div className="relative">
-        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
-
-        <div className="space-y-8">
-          {filteredActivities.map((activity) => {
-            const category = categories[activity.category];
-
-            return (
-              <div key={activity.id} className="relative flex items-start">
-                {/* 線 */}
-                <div className="absolute left-6 w-4 h-4 bg-primary-600 border-4 border-white rounded-full shadow"></div>
-
-                {/* 内容 */}
-                <div className="ml-16 bg-white rounded-lg shadow-sm border border-gray-200 p-6 w-full hover:shadow-md transition-shadow">
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-3">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <span
-                          className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${category.color}`}
-                        >
-                          {category.icon} {category.name}
-                        </span>
-                        <time className="text-sm text-gray-500">
-                          {toJapaneseDate(activity.date)}
-                        </time>
-                      </div>
-                      <h3 className="text-lg font-bold text-gray-900">
-                        {activity.title}
-                      </h3>
-                    </div>
-
-                    {/* 概要イメージ画像 */}
-                    {activity.summaryImagePath && (
-                      <div className="md:w-32 md:h-32 w-full h-48 shrink-0">
-                        <img
-                          src={activity.summaryImagePath}
-                          alt={activity.title}
-                          className="w-full h-full object-cover rounded-lg"
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  <p className="text-gray-600 mb-4">{activity.description}</p>
-
-                  <div className="grid md:grid-cols-2 gap-4 text-sm mb-4">
-                    {activity.participants && (
-                      <div>
-                        <span className="font-medium text-gray-700">
-                          参加者:{" "}
-                        </span>
-                        <span className="text-gray-600">
-                          {activity.participants.join(", ")}
-                        </span>
-                      </div>
-                    )}
-
-                    {/* 場所 */}
-                    {activity.location && (
-                      <div>
-                        <span className="font-medium text-gray-700">
-                          場所:{" "}
-                        </span>
-                        <span className="text-gray-600">
-                          {activity.location}
-                        </span>
-                      </div>
-                    )}
-
-                    {/* 関連活動 */}
-                    {activity.relatedActivities && (
-                      <div className="md:col-span-2">
-                        <span className="font-medium text-gray-700">
-                          関連活動:{" "}
-                        </span>
-                        <span className="text-primary-600 font-medium">
-                          {activity.relatedActivities.join(", ")}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* タグ */}
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    {activity.tags && (
-                      <div>
-                        <span className="font-medium text-gray-700">
-                          タグ:{" "}
-                        </span>
-                        <span className="text-gray-600">
-                          {activity.tags.join(", ")}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* 詳細を見るボタン */}
-                  {activity.isContented && (
-                    <button
-                      onClick={() => openModal(activity.id)}
-                      className="text-primary-600 hover:text-primary-500 font-medium text-sm transition-colors"
-                    >
-                      詳細を見る →
-                    </button>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <p className="text-xl text-gray-600">ソフトウェア工房の活動記録とマイルストーン</p>
       </div>
 
       {Object.keys(activities).length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">
-            条件に一致する活動が見つかりませんでした。
-          </p>
+          <p className="text-gray-500">条件に一致する活動が見つかりませんでした。</p>
         </div>
       )}
 
@@ -200,10 +24,7 @@ export default function Activities(): React.ReactElement {
         {Object.entries(categories).map(([key, config]) => {
           const count = activities.filter((a) => a.category === key).length;
           return (
-            <div
-              key={key}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-center"
-            >
+            <div key={key} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-center">
               <div className="text-2xl mb-1">{config.icon}</div>
               <div className="text-lg font-bold text-gray-900">{count}</div>
               <div className="text-sm text-gray-600">{config.name}</div>
@@ -224,16 +45,11 @@ export default function Activities(): React.ReactElement {
                     categories[selectedActivity.category].color
                   }`}
                 >
-                  {categories[selectedActivity.category].icon}{" "}
-                  {categories[selectedActivity.category].name}
+                  {categories[selectedActivity.category].icon} {categories[selectedActivity.category].name}
                 </span>
-                <time className="text-sm text-gray-500">
-                  {toJapaneseDate(selectedActivity.date)}
-                </time>
+                <time className="text-sm text-gray-500">{toJapaneseDate(selectedActivity.date)}</time>
               </div>
-              <h2 className="text-3xl font-bold text-gray-900">
-                {selectedActivity.title}
-              </h2>
+              <h2 className="text-3xl font-bold text-gray-900">{selectedActivity.title}</h2>
             </div>
 
             {/* メタ情報 */}
@@ -241,27 +57,19 @@ export default function Activities(): React.ReactElement {
               {selectedActivity.participants && (
                 <div>
                   <span className="font-medium text-gray-700">参加者: </span>
-                  <span className="text-gray-600">
-                    {selectedActivity.participants.join(", ")}
-                  </span>
+                  <span className="text-gray-600">{selectedActivity.participants.join(", ")}</span>
                 </div>
               )}
               {selectedActivity.location && (
                 <div>
                   <span className="font-medium text-gray-700">場所: </span>
-                  <span className="text-gray-600">
-                    {selectedActivity.location}
-                  </span>
+                  <span className="text-gray-600">{selectedActivity.location}</span>
                 </div>
               )}
               {selectedActivity.relatedActivities && (
                 <div>
-                  <span className="font-medium text-gray-700">
-                    関連プロジェクト:{" "}
-                  </span>
-                  <span className="text-primary-600 font-medium">
-                    {selectedActivity.relatedActivities}
-                  </span>
+                  <span className="font-medium text-gray-700">関連プロジェクト: </span>
+                  <span className="text-primary-600 font-medium">{selectedActivity.relatedActivities}</span>
                 </div>
               )}
             </div>
@@ -269,33 +77,30 @@ export default function Activities(): React.ReactElement {
             {/* 本文 */}
             {selectedActivity.content && (
               <div className="prose max-w-none mb-6">
-                {selectedActivity.content
-                  .split("\n")
-                  .map((paragraph, index) => (
-                    <p key={index} className="text-gray-700 mb-4">
-                      {paragraph}
-                    </p>
-                  ))}
+                {selectedActivity.content.split("\n").map((paragraph, index) => (
+                  <p key={index} className="text-gray-700 mb-4">
+                    {paragraph}
+                  </p>
+                ))}
               </div>
             )}
 
             {/* 画像ギャラリー */}
-            {selectedActivity.imagesPath &&
-              selectedActivity.imagesPath.length > 0 && (
-                <div className="space-y-4">
-                  <h3 className="text-lg font-bold text-gray-900">画像</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {selectedActivity.imagesPath.map((image, index) => (
-                      <img
-                        key={index}
-                        src={image}
-                        alt={`${selectedActivity.title} - 画像 ${index + 1}`}
-                        className="w-full h-auto rounded-lg shadow-sm"
-                      />
-                    ))}
-                  </div>
+            {selectedActivity.imagesPath && selectedActivity.imagesPath.length > 0 && (
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-gray-900">画像</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {selectedActivity.imagesPath.map((image, index) => (
+                    <img
+                      key={index}
+                      src={image}
+                      alt={`${selectedActivity.title} - 画像 ${index + 1}`}
+                      className="w-full h-auto rounded-lg shadow-sm"
+                    />
+                  ))}
                 </div>
-              )}
+              </div>
+            )}
           </div>
         )}
       </Modal>
