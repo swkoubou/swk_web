@@ -41,19 +41,19 @@ function Header(): React.ReactElement {
               作品集
             </Link>
             <Link
-              to="/activity"
+              to="/activities"
               className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
               活動記録
             </Link>
             <Link
-              to="/blog"
+              to="/article"
               className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
-              blog
+              記事
             </Link>
             <Link
-              to="/notice"
+              to="/news"
               className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >
               お知らせ
@@ -70,32 +70,12 @@ function Header(): React.ReactElement {
             >
               {/* // TODO: Set Material Icon. isMenuOpen ? "Open" : "Close" */}
               {isMenuOpen ? (
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               ) : (
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
               )}
             </button>
@@ -124,7 +104,7 @@ function Header(): React.ReactElement {
                 作品集
               </Link>
               <Link
-                to="/activity"
+                to="/activities"
                 onClick={setCloseMenu}
                 className="text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 px-3 py-2 rounded-md text-base font-medium transition-colors"
               >
@@ -132,7 +112,7 @@ function Header(): React.ReactElement {
                 活動記録
               </Link>
               <Link
-                to="/blog"
+                to="/article"
                 onClick={setCloseMenu}
                 className="text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 px-3 py-2 rounded-md text-base font-medium transition-colors"
               >
@@ -140,12 +120,12 @@ function Header(): React.ReactElement {
                 記事
               </Link>
               <Link
-                to="/notice"
+                to="/news"
                 onClick={setCloseMenu}
                 className="text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 px-3 py-2 rounded-md text-base font-medium transition-colors"
               >
                 {/* // TODO: Set Material Icon. "Article" */}
-                お知らせ
+                ニュース
               </Link>
             </nav>
           </div>
