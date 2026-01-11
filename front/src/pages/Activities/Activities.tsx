@@ -3,7 +3,7 @@ import { categories } from "@data/activities";
 import Modal from "@components/Modal";
 import { useActivities } from "@hooks/useActivities";
 
-function Activities(): React.ReactElement {
+export default function Activities(): React.ReactElement {
   const {
     activities,
     filteredActivities,
@@ -302,5 +302,3 @@ function Activities(): React.ReactElement {
     </div>
   );
 }
-
-export default Activities;

@@ -5,6 +5,9 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    host: "0.0.0.0",
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
@@ -16,6 +19,8 @@ export default defineConfig({
       "@appTypes": path.resolve(__dirname, "src/types"),
       "@services": path.resolve(__dirname, "src/services"),
       "@config": path.resolve(__dirname, "src/config"),
+      "@styles": path.resolve(__dirname, "src/styles"),
+      "@assets": path.resolve(__dirname, "src/assets"),
     },
   },
   plugins: [react(), tailwindcss()],

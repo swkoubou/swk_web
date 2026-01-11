@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { getBlogPostById, getBlogPosts } from "../services/blogService";
-import type { BlogPost } from "../data/blogs";
+import { getBlogPostById, getBlogPosts } from "@services/blogService";
+import type { BlogPost } from "@data/blogs";
 
-function BlogDetail() {
+export default function ArticleDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [post, setPost] = useState<BlogPost | null>(null);
@@ -119,26 +119,26 @@ function BlogDetail() {
         <h2 className="text-2xl font-bold text-gray-900 mb-6">関連記事</h2>
         <div className="grid md:grid-cols-2 gap-6">
           {relatedPosts.map((relatedPost) => (
-              <Link
-                key={relatedPost.id}
-                to={`/blog/${relatedPost.id}`}
-                className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
-              >
-                <h3 className="text-lg font-bold text-gray-900 mb-2 hover:text-emerald-600 transition-colors">
-                  {relatedPost.title}
-                </h3>
-                <p className="text-gray-600 text-sm line-clamp-2 mb-3">
-                  {relatedPost.excerpt}
-                </p>
-                <div className="flex items-center text-xs text-gray-500">
-                  <time>
-                    {new Date(relatedPost.date).toLocaleDateString("ja-JP")}
-                  </time>
-                  <span className="mx-2">•</span>
-                  <span>{relatedPost.readTime}</span>
-                </div>
-              </Link>
-            ))}
+            <Link
+              key={relatedPost.id}
+              to={`/blog/${relatedPost.id}`}
+              className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+            >
+              <h3 className="text-lg font-bold text-gray-900 mb-2 hover:text-emerald-600 transition-colors">
+                {relatedPost.title}
+              </h3>
+              <p className="text-gray-600 text-sm line-clamp-2 mb-3">
+                {relatedPost.excerpt}
+              </p>
+              <div className="flex items-center text-xs text-gray-500">
+                <time>
+                  {new Date(relatedPost.date).toLocaleDateString("ja-JP")}
+                </time>
+                <span className="mx-2">•</span>
+                <span>{relatedPost.readTime}</span>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
 
@@ -154,5 +154,3 @@ function BlogDetail() {
     </div>
   );
 }
-
-export default BlogDetail;

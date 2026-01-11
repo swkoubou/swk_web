@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getBlogPosts, getAllTags } from "../services/blogService";
-import type { BlogPost } from "../data/blogs";
+import { getBlogPosts, getAllTags } from "@services/blogService";
+import type { BlogPost } from "@data/blogs";
 
-function Blog() {
+export default function Article() {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
@@ -159,5 +159,3 @@ function Blog() {
     </div>
   );
 }
-
-export default Blog;

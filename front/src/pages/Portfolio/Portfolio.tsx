@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { getPortfolios } from "../services/portfolioService";
-import type { PortfolioItem } from "../data/portfolios";
-import Modal from "../components/Modal";
+import { getPortfolios } from "@services/portfolioService";
+import type { PortfolioItem } from "@data/portfolios";
+import Modal from "@components/Modal";
 
-function Portfolio() {
+export default function Portfolio() {
   const [portfolios, setPortfolios] = useState<PortfolioItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedPortfolio, setSelectedPortfolio] =
@@ -99,7 +99,9 @@ function Portfolio() {
                   <span className="inline-block px-3 py-1 text-xs bg-primary-100 text-primary-800 rounded-full font-medium">
                     {portfolio.category}
                   </span>
-                  <time className="text-sm text-gray-500">{portfolio.date}</time>
+                  <time className="text-sm text-gray-500">
+                    {portfolio.date}
+                  </time>
                 </div>
 
                 <h3 className="text-xl font-bold text-gray-900 mb-3">
@@ -271,28 +273,27 @@ function Portfolio() {
             </div>
 
             {/* 画像ギャラリー */}
-            {selectedPortfolio.images && selectedPortfolio.images.length > 0 && (
-              <div className="space-y-4">
-                <h3 className="text-lg font-bold text-gray-900">
-                  スクリーンショット
-                </h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  {selectedPortfolio.images.map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`${selectedPortfolio.title} - 画像 ${index + 1}`}
-                      className="w-full h-auto rounded-lg shadow-sm"
-                    />
-                  ))}
+            {selectedPortfolio.images &&
+              selectedPortfolio.images.length > 0 && (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-bold text-gray-900">
+                    スクリーンショット
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {selectedPortfolio.images.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt={`${selectedPortfolio.title} - 画像 ${index + 1}`}
+                        className="w-full h-auto rounded-lg shadow-sm"
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         )}
       </Modal>
     </div>
   );
 }
-
-export default Portfolio;

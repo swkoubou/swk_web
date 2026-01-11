@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 // components/Header.tsx
@@ -137,7 +137,7 @@ function Header(): React.ReactElement {
                 className="text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 px-3 py-2 rounded-md text-base font-medium transition-colors"
               >
                 {/* // TODO: Set Material Icon. "News" */}
-                blog
+                記事
               </Link>
               <Link
                 to="/notice"

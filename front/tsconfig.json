@@ -15,7 +15,8 @@
       "@pages/*": ["src/pages/*"],
       "@appTypes/*": ["src/types/*"],
       "@services/*": ["src/services/*"],
-      "@config/*": ["src/config/*"]
+      "@config/*": ["src/config/*"],
+      "@styles/*": ["src/styles/*"]
     }
   }
 }
