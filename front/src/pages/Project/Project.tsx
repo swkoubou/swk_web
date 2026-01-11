@@ -1,4 +1,4 @@
-function Project() {
+export default function Project() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
@@ -81,5 +81,3 @@ function Project() {
     </div>
   );
 }
-
-export default Project;

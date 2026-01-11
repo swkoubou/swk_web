@@ -1,12 +1,11 @@
 import { MoreHoriz } from "@mui/icons-material";
 import Logo from "../components/Logo";
 import { Link } from "react-router-dom";
-import { getLatestNotices } from "../data/notices";
-import "@styles/Home.css";
-import imageMan from "@assets/controlDeviceMan.png";
+import { getLatestNotices } from "../data/news";
 
 function Home() {
   const latestNotices = getLatestNotices(3);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Hero Section */}
@@ -56,11 +55,6 @@ function Home() {
             ソフトウェア工房とは
           </h3>
           <div className="mb-4 h-px bg-gray-200"></div>
-          <img
-            src={imageMan}
-            alt=""
-            className="ml-auto mr-auto max-w-40 mb-4 sm:max-w-80"
-          />
           <div className="text-gray-800 leading-relaxed space-y-4">
             <p>
               ソフトウェア工房は、神奈川工科大学内にある学生によるソフトウェア開発組織です。
@@ -85,10 +79,8 @@ function Home() {
               <div>
                 <h4 className="font-semibold text-gray-900 mb-2 text-lg">
                   使用技術
-                  <span className="text-xs ml-2 mb-1 tracking-tighter">
-                    <span className="styles-mini-text">
-                      ※ 今はこの Web サイトに使ったものを載せています
-                    </span>
+                  <span className="align-middle ml-2 tracking-tighter text-[8px]">
+                    ※ 現在はこの Web サイトに使ったものを載せています
                   </span>
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -112,7 +104,7 @@ function Home() {
       </div>
 
       {/* Portfolio Preview Section */}
-      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-12 text-center border border-emerald-100">
+      <div className="bg-linear-to-br from-emerald-50 to-teal-50 rounded-lg p-12 text-center border border-emerald-100">
         <h2 className="text-3xl font-bold text-gray-900 mb-4">作品集</h2>
         <p className="text-gray-600 text-lg mb-6">
           現在編集中、チーム又は個々人で作成した作品を掲載予定

@@ -1,4 +1,4 @@
-export interface Notice {
+export interface News {
   id: string;
   date: string;
   title: string;
@@ -6,7 +6,7 @@ export interface Notice {
   link?: string;
 }
 
-export const notices: Notice[] = [
+export const news: News[] = [
   {
     id: "1",
     date: "2025.12.15",
@@ -30,8 +30,8 @@ export const notices: Notice[] = [
 ];
 
 // 最新のお知らせを取得する関数（最大3件）
-export const getLatestNotices = (count: number = 3): Notice[] => {
-  return notices
+export const getLatestNotices = (count: number = 3): News[] => {
+  return news
     .sort((a, b) => {
       // 日付文字列を比較用に変換 (YYYY.MM.DD -> YYYYMMDD)
       const dateA = a.date.replace(/\./g, "");
@@ -42,8 +42,8 @@ export const getLatestNotices = (count: number = 3): Notice[] => {
 };
 
 // すべてのお知らせを取得する関数
-export const getAllNotices = (): Notice[] => {
-  return notices.sort((a, b) => {
+export const getAllNews = (): News[] => {
+  return news.sort((a, b) => {
     const dateA = a.date.replace(/\./g, "");
     const dateB = b.date.replace(/\./g, "");
     return dateB.localeCompare(dateA); // 降順（新しい順）

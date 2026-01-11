@@ -6,10 +6,8 @@ import Portfolio from "./pages/Portfolio/Portfolio";
 import Activities from "./pages/Activities/Activities";
 import Article from "./pages/Article/Article";
 import ArticleDetail from "./pages/Article/ArticleDetail";
-import Notice from "./pages/Notice";
-import Project from "./pages/Project";
-import Achievement from "./pages/Achievement";
-import Access from "./pages/Access";
+import News from "./pages/News/News";
+import Project from "./pages/Project/Project";
 
 function App() {
   return (
@@ -23,10 +21,8 @@ function App() {
             <Route path="/activities" element={<Activities />} />
             <Route path="/article" element={<Article />} />
             <Route path="/article/:id" element={<ArticleDetail />} />
-            <Route path="/notice" element={<Notice />} />
+            <Route path="/news" element={<News />} />
             <Route path="/project" element={<Project />} />
-            <Route path="/achievement" element={<Achievement />} />
-            <Route path="/access" element={<Access />} />
           </Routes>
         </main>
         <Footer />

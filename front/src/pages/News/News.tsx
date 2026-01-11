@@ -1,7 +1,7 @@
-import { getAllNotices } from "../data/notices";
+import { getAllNews } from "@/data/news";
 
-function Notice() {
-  const allNotices = getAllNotices();
+export default function News() {
+  const allNews = getAllNews();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -13,25 +13,25 @@ function Notice() {
       </div>
 
       <div className="space-y-6 mb-12">
-        {allNotices.map((notice) => (
+        {allNews.map((news) => (
           <div
-            key={notice.id}
+            key={news.id}
             className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:border-emerald-200 transition-colors"
           >
-            <p className="text-sm text-gray-500 mb-2">{notice.date}</p>
+            <p className="text-sm text-gray-500 mb-2">{news.date}</p>
             <h3 className="text-xl font-bold mb-3">
-              {notice.link ? (
+              {news.link ? (
                 <a
-                  href={notice.link}
+                  href={news.link}
                   className="text-emerald-600 hover:text-emerald-500"
                 >
-                  {notice.title}
+                  {news.title}
                 </a>
               ) : (
-                <span className="text-gray-900">{notice.title}</span>
+                <span className="text-gray-900">{news.title}</span>
               )}
             </h3>
-            <p className="text-gray-600">{notice.description}</p>
+            <p className="text-gray-600">{news.description}</p>
           </div>
         ))}
       </div>
@@ -70,5 +70,3 @@ function Notice() {
     </div>
   );
 }
-
-export default Notice;
