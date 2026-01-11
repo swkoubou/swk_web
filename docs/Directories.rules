@@ -1,0 +1,34 @@
+// docs/Directories
+
+リポジトリ全体のディレクトリ構成と簡単な説明。
+
+- docs/
+  - 本ファイル（ディレクトリ構成の説明）やプロジェクト全体のドキュメントを格納するフォルダ。
+- swk-web/
+  - プロジェクトのメインワークスペース（バックエンド + フロントエンド）
+  - Dockerfile, go.mod: ビルド／依存管理
+  - cmd/
+    - migrate/: DB マイグレーション用のコマンド
+    - server/: サーバ起動用エントリポイント
+  - configs/: アプリケーション設定ファイル
+  - docs/: プロジェクト固有ドキュメント（設計書、テンプレ等）
+  - frontend/: フロントエンド（Vite + React + TypeScript）
+    - package.json, tsconfig\*.json, vite.config.ts 等
+    - public/: 静的アセット（images 等）
+    - src/: ソースコード（App.tsx, pages/, components/, services/, hooks/ など）
+      - components/: UI コンポーネント
+      - pages/: ページ単位のコンポーネント
+      - services/: API 呼び出しや外部連携ロジック
+  - internal/: サーバー側内部実装（Go）
+    - config/: 設定読み取り、環境変数処理
+    - controller/: HTTP ハンドラ（記事、認証など）
+    - model/: データモデル、DB 接続、エラー定義
+    - repository/: 永続化層（例：ユーザーリポジトリ）
+    - service/: ビジネスロジック層（認証、ユーザー管理など）
+- その他
+  - ルート直下の docs/ はプロジェクト共通の補助ドキュメントを格納
+  - 各ディレクトリの詳細は実際のファイル群を参照して更新してください
+
+補足:
+
+- フロントエンド・バックエンド双方を含むモノレポ的構成のため、README に起動手順や環境構築手順を明記すると開発者に親切です。
