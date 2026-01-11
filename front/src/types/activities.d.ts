@@ -4,6 +4,7 @@
 /// * 活動履歴の概要の型
 export type Activities = {
   id: number;
+  uuid: string;
 
   // Main Contents
   title: string;
@@ -32,6 +33,7 @@ export type Activities = {
 /// * 活動履歴の詳細の型
 export type Activity = {
   id: number;
+  uuid: string;
 
   // Main Contents
   title: string;

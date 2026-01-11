@@ -2,6 +2,7 @@ import { useFiltering } from "@hooks/Activities/useFiltering";
 import type { Activities } from "@appTypes/activities.d.ts";
 import { categories } from "@data/activities";
 import { useActivities } from "@/hooks/Activities/useActivities";
+import { Link } from "react-router-dom";
 
 interface FilteredListProps {
   activities: Activities[];
@@ -9,7 +10,7 @@ interface FilteredListProps {
 
 export default function FilteredList({ activities }: FilteredListProps) {
   const { filteredActivities } = useFiltering({ activities });
-  const { toJapaneseDate, openModal } = useActivities();
+  const { toJapaneseDate } = useActivities();
   <div className="relative">
     <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
 
@@ -86,12 +87,12 @@ export default function FilteredList({ activities }: FilteredListProps) {
 
               {/* 詳細を見るボタン */}
               {activity.isContented && (
-                <button
-                  onClick={() => openModal(activity.id)}
+                <Link
+                  to={`/${activity.uuid}`}
                   className="text-primary-600 hover:text-primary-500 font-medium text-sm transition-colors"
                 >
                   詳細を見る →
-                </button>
+                </Link>
               )}
             </div>
           </div>
