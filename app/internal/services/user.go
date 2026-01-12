@@ -1,5 +1,5 @@
 // app/internal/repository/admin_repository.go
-package service
+package services
 
 import (
 	"errors"

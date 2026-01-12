@@ -1,4 +1,4 @@
-package model
+package models
 
 // UserRepository　Interface
 type UserRepository interface {

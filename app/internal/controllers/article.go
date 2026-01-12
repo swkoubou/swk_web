@@ -1,9 +1,9 @@
-package controller
+package controllers
 
 import (
+	models "app/internal/model"
 	"net/http"
 	"strconv"
-	models "swk-web/internal/model"
 	"time"
 
 	"github.com/gin-gonic/gin"

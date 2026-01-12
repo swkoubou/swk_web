@@ -1,13 +1,19 @@
-package controller
+package controllers
 
 import (
+	"app/internal/model"
+	"app/internal/service"
 	"net/http"
-	"swk-web/internal/model"
-	"swk-web/internal/service"
 
 	"github.com/gin-gonic/gin"
 )
 
+type ChangePasswordRequest struct {
+	OldPassword string `json:"oldPassword"`
+	NewPassword string `json:"newPassword"`
+}
+
+// - 認証関連のコントローラー
 func Login(c *gin.Context) {
 	var req model.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -20,12 +26,15 @@ func Login(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Login successful."})
 }
 
+// - パスワード変更
 func ChangePassword(c *gin.Context) {
 	var req model.ChangePasswordRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	service.ChangePassword(req.OldPassword, req.NewPassword)
 	
 	c.JSON(http.StatusOK, gin.H{"message": "Password changed successfully."})
 }

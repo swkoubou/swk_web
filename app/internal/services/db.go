@@ -1,5 +1,5 @@
 // app/service/db.go
-package service
+package services
 
 import (
 	"log"

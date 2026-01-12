@@ -1,4 +1,4 @@
-package model
+package models
 
 // app/internal/service/errors.go
 

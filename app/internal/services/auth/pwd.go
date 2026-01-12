@@ -1,4 +1,4 @@
-package service
+package services
 
 // app/internal/service/password.go
 // * This is for password handler logic

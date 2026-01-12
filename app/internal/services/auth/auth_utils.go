@@ -1,4 +1,4 @@
-package service
+package services
 
 // internal/service/auth_utils.go
 // * このファイルは権限の確認を行う関数を定義しています。

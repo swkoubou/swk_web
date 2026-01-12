@@ -1,9 +1,9 @@
-package repository
+package repositories
 
 // app/internal/repository/user_repository.go
 
 import (
-	"swk-web/internal/model"
+	"app/internal/models"
 
 	"gorm.io/gorm"
 )
@@ -14,7 +14,7 @@ type GormUserRepository struct {
 
 // Get user by username
 func (r *GormUserRepository) GetUserByUsername(username string) (*model.User, error) {
-	var user model.User
+	var user models.User
 	err := r.DB.Where("username = ?", username).First(&user).Error
 	if err != nil {
 		return nil, err
@@ -23,8 +23,8 @@ func (r *GormUserRepository) GetUserByUsername(username string) (*model.User, er
 }
 
 // Get user by ID
-func (r *GormUserRepository) GetUserByID(id uint ) (*model.User, error) {
-	var user model.User
+func (r *GormUserRepository) GetUserByID(id uint ) (*models.User, error) {
+	var user models.User
 	result := r.DB.First(&user, id)
 	if result.Error != nil {
 		return nil, result.Error
@@ -33,8 +33,8 @@ func (r *GormUserRepository) GetUserByID(id uint ) (*model.User, error) {
 }
 
 // Get all users
-func (r *GormUserRepository) GetUsers() ([]model.User, error) {
-	var users []model.User
+func (r *GormUserRepository) GetUsers() ([]models.User, error) {
+	var users []models.User
 	result := r.DB.Find(&users)
 	if result.Error != nil {
 		return nil, result.Error
@@ -43,19 +43,19 @@ func (r *GormUserRepository) GetUsers() ([]model.User, error) {
 }
 
 // Create new user
-func (r *GormUserRepository) CreateUser(user *model.User) error {
+func (r *GormUserRepository) CreateUser(user *models.User) error {
 	result := r.DB.Create(user)
 	return result.Error
 }
 
 // Update a user
-func (r *GormUserRepository) UpdateUser(user *model.User) error {
+func (r *GormUserRepository) UpdateUser(user *models.User) error {
 	result := r.DB.Save(user)
 	return result.Error
 }
 
 // Delete a user
-func (r *GormUserRepository) DeleteUser(user *model.User) error {
+func (r *GormUserRepository) DeleteUser(user *models.User) error {
 	result := r.DB.Delete(user)
 	return result.Error
 }

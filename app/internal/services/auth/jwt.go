@@ -1,4 +1,4 @@
-package service
+package services
 
 // app/internal/service/jwt.go
 // * このファイルは JWT を操作するためのメソッドを定義しています。
